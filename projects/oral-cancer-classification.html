@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oral Cancer Classification — Dinesh Ram S P</title>
+    <meta
+      name="description"
+      content="An end-to-end deep learning framework combining U-Net segmentation, EfficientNetV2-M classification, and Grad-CAM++ explainability for early oral cancer detection."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="ambient-bg" aria-hidden="true">
+      <div class="aurora aurora-a"></div>
+      <div class="aurora aurora-c"></div>
+    </div>
+
+    <div id="navMount"></div>
+
+    <main>
+      <section class="proj-hero">
+        <div class="wrap">
+          <div class="proj-breadcrumb reveal">
+            <a href="../index.html" data-home-link>Home</a>
+            <span>/</span>
+            <a href="../index.html#projects" data-section-link="projects"
+              >Projects</a
+            >
+            <span>/</span>
+            <span>Oral Cancer Classification</span>
+          </div>
+
+          <span class="proj-tag reveal">Medical Imaging · Research</span>
+          <h1 class="proj-title reveal">
+            Multi-Class Oral Cancer Classification Using EfficientNetV2 on Oral
+            Photographs
+          </h1>
+          <p class="proj-summary reveal">
+            An end-to-end deep learning framework for early oral cancer
+            detection from smartphone-acquired oral photographs — combining
+            segmentation, classification, and explainability into a single
+            pipeline designed for low-cost screening.
+          </p>
+
+          <div class="proj-meta-row reveal">
+            <div class="proj-meta-item">
+              <span>Timeline</span><span>Jul 2025 – May 2026</span>
+            </div>
+            <div class="proj-meta-item">
+              <span>Category</span><span>Medical Imaging · Deep Learning</span>
+            </div>
+            <div class="proj-meta-item">
+              <span>Presented at</span><span>ICCCSP 2026</span>
+            </div>
+          </div>
+
+          <div class="proj-actions reveal">
+            <p class="section-desc" style="font-family: var(--font-mono); font-size: 12.5px; color: var(--text-dimmer); margin: 0;">
+              Repository pending publication — code available on request.
+            </p>
+          </div>
+          <p
+            class="section-desc reveal"
+            style="margin-top: -24px; margin-bottom: 32px"
+          >
+            Repository not yet published — this page will link to the code once
+            it's available.
+          </p>
+        </div>
+      </section>
+
+      <div class="wrap proj-body">
+        <section class="proj-section reveal">
+          <h2>Overview</h2>
+          <p>
+            Developed as part of my M.Tech in Artificial Intelligence, this
+            project builds a complete deep learning framework for early oral
+            cancer detection using smartphone-acquired oral photographs — aimed
+            at enabling low-cost, accessible screening rather than requiring
+            specialized clinical imaging equipment.
+          </p>
+        </section>
+
+        <section class="proj-section reveal">
+          <h2>Pipeline</h2>
+          <p>
+            The framework combines three stages into a single
+            segmentation-to-classification pipeline:
+          </p>
+          <ul>
+            <li>
+              <strong>U-Net</strong> for oral cavity segmentation — isolating the
+              region of interest from raw smartphone photographs and removing
+              background noise before classification.
+            </li>
+            <li>
+              <strong>EfficientNetV2-M</strong> for multi-class disease
+              classification across the segmented region. Selected after a
+              comparative study of multiple deep learning architectures;
+              EfficientNetV2-M achieved the best balance of accuracy and
+              computational efficiency on this dataset.
+            </li>
+            <li>
+              <strong>Grad-CAM++</strong> for Explainable AI — visualising which
+              regions drove each prediction to support clinically meaningful
+              interpretation. Evaluated against several XAI techniques;
+              Grad-CAM++ produced the most accurate lesion localisation.
+            </li>
+          </ul>
+        </section>
+
+        <section class="proj-section reveal">
+          <h2>Dataset &amp; training strategy</h2>
+          <p>
+            The dataset consists of smartphone-acquired oral photographs spanning
+            multiple disease classes, sourced to reflect the accessibility
+            constraints of real-world screening — standard clinical equipment
+            was deliberately excluded.
+          </p>
+          <p>
+            Medical imaging datasets are rarely balanced across classes, and this
+            one was no exception. Class imbalance was addressed through two
+            complementary strategies:
+          </p>
+          <ul>
+            <li>
+              <strong>Data augmentation</strong> — geometric and photometric
+              transforms applied to under-represented classes to increase
+              effective training diversity without fabricating samples.
+            </li>
+            <li>
+              <strong>Weighted focal loss</strong> — downweights easy majority-class
+              examples and upweights harder, rarer ones during training, preventing
+              the model from optimising purely for the dominant class.
+            </li>
+          </ul>
+        </section>
+
+        <section class="proj-section reveal">
+          <h2>Results &amp; model selection</h2>
+          <p>
+            Multiple deep learning architectures were compared during the model
+            selection phase. EfficientNetV2-M achieved the best overall
+            classification performance among the candidates evaluated. Several
+            XAI techniques were also assessed side by side; Grad-CAM++ was
+            identified as the most effective for accurately localising lesion
+            regions in oral photographs.
+          </p>
+          <p>
+            Full quantitative results are included in the conference paper
+            accepted at ICCCSP 2026. Code and detailed metrics will be published
+            alongside the paper.
+          </p>
+        </section>
+
+
+
+        <section class="proj-section reveal">
+          <h2>Research recognition</h2>
+          <div class="callout">
+            <p>
+              This work was presented at the International Conference on
+              Communication, Computing, Signal Processing (ICCCSP 2026) and
+              forms part of my M.Tech research.
+            </p>
+          </div>
+        </section>
+
+        <section class="proj-section reveal">
+          <h2>Tech stack</h2>
+          <div class="stack-row">
+            <span class="stack-tag">Python</span
+            ><span class="stack-tag">PyTorch</span
+            ><span class="stack-tag">U-Net</span
+            ><span class="stack-tag">EfficientNetV2-M</span
+            ><span class="stack-tag">Computer Vision</span
+            ><span class="stack-tag">Explainable AI (Grad-CAM++)</span
+            ><span class="stack-tag">OpenCV</span>
+          </div>
+        </section>
+      </div>
+
+      <div class="proj-nav-footer reveal">
+        <a href="./land-cover-classification-gcp.html"
+          >← Land Cover Classification (GCP)</a
+        >
+        <a href="../index.html#projects" data-section-link="projects"
+          >Back to all projects →</a
+        >
+      </div>
+    </main>
+
+    <div id="footerMount"></div>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
