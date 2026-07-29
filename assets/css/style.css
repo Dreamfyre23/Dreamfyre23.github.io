@@ -706,8 +706,8 @@ footer.site-footer{ border-top:1px solid var(--border); padding:28px 0; display:
 }
 html[data-theme="light"] .aurora-canvas{ opacity:0.25; filter: blur(65px); }
 
-/* Hide static SVG aurora blobs when canvas is active */
-.ambient-bg canvas + .aurora{ display:none; }
+/* Hide all static CSS aurora gradient blobs when dynamic canvas is active */
+.ambient-bg canvas ~ .aurora { display: none !important; }
 
 /* ---------- HEADER STICKY & HIDE/REVEAL ---------- */
 header.nav{
