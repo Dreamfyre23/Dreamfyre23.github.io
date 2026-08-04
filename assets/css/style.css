@@ -195,15 +195,23 @@ html[data-theme="light"] .bg-gradient {
   );
 }
 
-/* Theme transition overlay — animation is driven entirely via inline styles in main.js
-   (setTimeout-based: expand 500ms → collapse at 560ms). No CSS class involvement. */
+/* Theme transition overlay — direct port from Sathyam Auto Finance
+   Origin is set via CSS custom properties so it doesn't conflict with
+   the transform transition. scale(6) from inset:0 covers all corners. */
 #theme-overlay {
   position: fixed;
-  inset: -10%;
+  inset: 0;
   z-index: 9999;
+  pointer-events: none;
   border-radius: 50%;
   transform: scale(0);
-  pointer-events: none;
+  transform-origin: var(--origin-x, 50%) var(--origin-y, 50%);
+  transition: none;
+}
+
+#theme-overlay.expanding {
+  transform: scale(6);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ============================================================

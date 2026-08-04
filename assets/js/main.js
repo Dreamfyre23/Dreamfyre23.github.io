@@ -20,57 +20,52 @@
   applyTheme(savedTheme);
 
   function toggleTheme(originEvent) {
-
     const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
     const next = current === 'light' ? 'dark' : 'light';
 
-    // Determine click origin for the radial overlay
+    // Determine click origin — expressed as percentage strings for CSS custom props
     let ox = '50%', oy = '50%';
     if (originEvent && originEvent.currentTarget) {
       const rect = originEvent.currentTarget.getBoundingClientRect();
-      const px = rect.left + rect.width / 2;
-      const py = rect.top  + rect.height / 2;
-      ox = ((px / window.innerWidth)  * 100).toFixed(1) + '%';
-      oy = ((py / window.innerHeight) * 100).toFixed(1) + '%';
+      ox = (((rect.left + rect.width  / 2) / window.innerWidth)  * 100).toFixed(1) + '%';
+      oy = (((rect.top  + rect.height / 2) / window.innerHeight) * 100).toFixed(1) + '%';
     }
 
     const overlay = document.getElementById('theme-overlay');
     if (overlay && !prefersReduced) {
       const overlayColor = next === 'light' ? '#f0f2f8' : '#0d0f14';
 
-      // Step 1 — reset to hidden, no transition, at click origin
-      overlay.style.cssText = [
-        `background: ${overlayColor}`,
-        `transform-origin: ${ox} ${oy}`,
-        `transform: scale(0)`,
-        `transition: none`,
-        `pointer-events: none`,
-      ].join(';');
+      // Set origin via CSS custom properties — this is key: transform-origin reads
+      // these vars in CSS, so it never conflicts with the transform transition itself.
+      overlay.style.setProperty('--origin-x', ox);
+      overlay.style.setProperty('--origin-y', oy);
+      overlay.style.background = overlayColor;
+      overlay.style.transform = 'scale(0)';
+      overlay.style.transition = 'none';
 
-      // Force reflow so the browser registers the scale(0) starting state
+      // Force reflow so browser registers the scale(0) start state
       overlay.offsetHeight;
 
-      // Step 2 — animate expansion (500ms)
-      overlay.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      overlay.style.transform = 'scale(3)';
+      // Trigger the expanding animation (defined entirely in CSS)
+      overlay.classList.add('expanding');
 
-      // Step 3 — switch theme halfway through (250ms)
+      // Switch theme halfway through the 550ms animation
       setTimeout(() => {
         applyTheme(next);
         localStorage.setItem('portfolio-theme', next);
         if (typeof updateGridColor === 'function') updateGridColor(next);
-      }, 250);
+      }, 275);
 
-      // Step 4 — collapse overlay after animation completes (500ms + 60ms buffer)
-      // Using setTimeout instead of transitionend — transitionend is unreliable
-      // when inline styles and CSS classes both modify transform simultaneously.
-      setTimeout(() => {
-        overlay.style.transition = 'none';
+      // Collapse after transition completes — transitionend is reliable here because
+      // transform-origin is set via CSS vars (not inline), so there's no style conflict
+      overlay.addEventListener('transitionend', function handler() {
+        overlay.classList.remove('expanding');
         overlay.style.transform = 'scale(0)';
-      }, 560);
+        overlay.removeEventListener('transitionend', handler);
+      });
 
     } else {
-      // Reduced motion or no overlay — instant swap
+      // Reduced motion — instant swap
       applyTheme(next);
       localStorage.setItem('portfolio-theme', next);
       if (typeof updateGridColor === 'function') updateGridColor(next);
