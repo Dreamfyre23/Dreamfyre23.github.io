@@ -35,7 +35,7 @@ Personal portfolio website of **Dinesh Ram S P** — Artificial Intelligence Eng
 
 ## 🎨 Design System & Motion Engineering
 
-Built with intent, vanilla web standards, and high-performance UI engineering — zero heavy framework bloat. Adopts the design language from [Sathyam Auto Finance](https://github.com/Dreamfyre23/FinanceLoanCaculator) as its visual foundation.
+Built with intent, vanilla web standards, and high-performance UI engineering — zero heavy framework bloat.
 
 - **Interactive Glowing Square Grid Canvas:** HTML5 2D grid canvas that illuminates in response to mouse movement with crimson glow (`#e63946`) in dark mode and blue glow (`#3b82f6`) in light mode.
 - **Dynamic Scroll & Page-Aware Background Intensity System:**
