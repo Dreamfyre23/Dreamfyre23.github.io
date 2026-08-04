@@ -102,6 +102,7 @@
     let cols, rows, cellSize;
     let raf;
     let brightnesses = [];
+    let currentIntensity = isProjectPage ? 0.25 : 1.0;
 
     function isMobile() { return window.innerWidth < 768; }
     function isTablet() { return window.innerWidth < 1024; }
@@ -147,12 +148,43 @@
 
     function lerp(a, b, t) { return a + (b - a) * t; }
 
-    const MAX_DIST = isMobile() ? 100 : 180;
+    // Calculates target background intensity based on page type & scroll position
+    function getTargetIntensity() {
+      if (isProjectPage) {
+        const scrollY = window.scrollY || 0;
+        const deepScroll = Math.min(1, scrollY / 1500);
+        return 0.25 - deepScroll * 0.05; // 0.25 at top -> 0.20 on deep scroll
+      }
+
+      const heroEl = document.querySelector('.hero');
+      const heroH = heroEl ? heroEl.offsetHeight : window.innerHeight;
+      const scrollY = window.scrollY || 0;
+
+      if (scrollY <= 0) return 1.0; // Hero Top: 100%
+
+      const f = scrollY / heroH;
+
+      if (f <= 0.5) {
+        // Hero Top (0.0) -> Middle of Hero (0.5): 100% -> 70%
+        return 1.0 - (f / 0.5) * 0.30;
+      } else if (f <= 1.0) {
+        // Middle of Hero (0.5) -> End of Hero (1.0): 70% -> 50%
+        return 0.70 - ((f - 0.5) / 0.5) * 0.20;
+      } else {
+        // End of Hero (1.0) -> Rest of Homepage (1.8+): 50% -> 25%
+        const f2 = Math.min(1, (f - 1.0) / 0.8);
+        return 0.50 - f2 * 0.25;
+      }
+    }
 
     function draw() {
       const W = window.innerWidth;
       const H = window.innerHeight;
       ctx.clearRect(0, 0, W, H);
+
+      // Smooth intensity interpolation for fluid scroll transitions
+      const targetIntensity = getTargetIntensity();
+      currentIntensity = lerp(currentIntensity, targetIntensity, 0.08);
 
       // Smooth glow color transition between themes
       currentGlow.r = lerp(currentGlow.r, targetGlow.r, 0.04);
@@ -160,8 +192,22 @@
       currentGlow.b = lerp(currentGlow.b, targetGlow.b, 0.04);
 
       const { r: gr, g: gg, b: gb } = currentGlow;
-      const maxDist = isMobile() ? 100 : 180;
+
+      // Mouse interaction radius & strength scale dynamically with intensity
+      const maxDistFull = isMobile() ? 100 : 180;
+      const maxDistMin  = isMobile() ? 50  : 90;
+      const maxDist = maxDistMin + (maxDistFull - maxDistMin) * currentIntensity;
+
+      // Interaction strength multiplier (Hero: 1.0, Sections/Project Pages: ~0.25-0.35)
+      const interactionStrength = 0.25 + 0.75 * currentIntensity;
+
+      // Glow brightness & opacity scaling
+      const glowOpacityMult = 0.15 + 0.60 * currentIntensity;
+
+      // Base grid square opacity softening (depth shift effect)
+      const baseOpacityMult = 0.40 + 0.60 * currentIntensity;
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      const baseOpacity = (isDark ? 0.03 : 0.04) * baseOpacityMult;
 
       for (let i = 0; i < squares.length; i++) {
         const { r, c } = squares[i];
@@ -172,32 +218,39 @@
 
         const dist  = Math.hypot(cx - mouse.x, cy - mouse.y);
         const glow  = Math.max(0, 1 - dist / maxDist);
-        const target = glow * glow; // quadratic falloff for sharper focus
+        const target = glow * glow * interactionStrength; // quadratic falloff scaled by interaction strength
         brightnesses[i] = lerp(brightnesses[i], target, 0.14);
 
         const brt = brightnesses[i];
-        if (brt < 0.003) continue;
+        if (brt < 0.002) continue;
 
-        // Base grid square (always very dim)
-        const baseOpacity = isDark ? 0.03 : 0.04;
+        // Base grid square (softened with depth)
+        const brtAdditive = isDark ? 0.18 * currentIntensity : 0.06 * currentIntensity;
         ctx.fillStyle = isDark
-          ? `rgba(255,255,255,${baseOpacity + brt * 0.18})`
-          : `rgba(0,0,0,${baseOpacity + brt * 0.06})`;
+          ? `rgba(255,255,255,${baseOpacity + brt * brtAdditive})`
+          : `rgba(0,0,0,${baseOpacity + brt * brtAdditive})`;
         ctx.fillRect(x, y, cellSize - 1, cellSize - 1);
 
         // Glow overlay on illuminated squares
-        if (brt > 0.01) {
-          ctx.fillStyle = `rgba(${gr},${gg},${gb},${brt * 0.75})`;
+        if (brt > 0.008) {
+          ctx.fillStyle = `rgba(${gr},${gg},${gb},${brt * glowOpacityMult})`;
           ctx.fillRect(x, y, cellSize - 1, cellSize - 1);
 
-          // Inner bright core for squares very close to cursor
-          if (brt > 0.25) {
+          // Inner bright core (only visible when intensity is higher & close to cursor)
+          if (brt > 0.20 && currentIntensity > 0.35) {
+            const coreFactor = (currentIntensity - 0.35) / 0.65;
             const coreSize = (cellSize - 1) * 0.6;
             const offset = (cellSize - coreSize) / 2;
-            ctx.fillStyle = `rgba(${gr},${gg},${gb},${(brt - 0.25) * 0.5})`;
+            ctx.fillStyle = `rgba(${gr},${gg},${gb},${(brt - 0.20) * 0.5 * coreFactor})`;
             ctx.fillRect(x + offset, y + offset, coreSize, coreSize);
           }
         }
+      }
+
+      // Soften background gradient in tandem with canvas depth shift
+      const bgGrad = document.querySelector('.bg-gradient');
+      if (bgGrad) {
+        bgGrad.style.opacity = (0.35 + 0.65 * currentIntensity).toFixed(2);
       }
 
       raf = requestAnimationFrame(draw);
