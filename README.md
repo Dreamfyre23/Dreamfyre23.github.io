@@ -1,4 +1,4 @@
-﻿# Dinesh Ram S P — Portfolio Website
+# Dinesh Ram S P — Portfolio Website
 
 > **Live Website:** [dreamfyre23.github.io](https://dreamfyre23.github.io)
 
@@ -33,17 +33,23 @@ Personal portfolio website of **Dinesh Ram S P** — Artificial Intelligence Eng
 
 ---
 
-## 🎨 Design & Motion Engineering Highlights
+## 🎨 Design System & Motion Engineering
 
-Built with intent, vanilla web standards, and high-performance UI engineering — zero heavy framework bloat.
+Built with intent, vanilla web standards, and high-performance UI engineering — zero heavy framework bloat. Adopts the design language from [Sathyam Auto Finance](https://github.com/Dreamfyre23/FinanceLoanCaculator) as its visual foundation.
 
-- **Dual-System Atmospheric Aurora Canvas:** A custom HTML5 2D canvas simulating translucent vertical light curtains (Northern Lights) flowing autonomously across the upper atmosphere, with a secondary localized magnetic mouse disturbance layer ($R = 280\text{px}$). 100% subordinate to content.
-- **Dual Light/Dark Theme:** Styled with CSS custom property design tokens and smooth circular ripple transitions via the **View Transition API**.
-- **`Cmd+K` Quick Navigation Command Palette:** Instant keyboard-driven search and jump palette with keyboard focus trap and fuzzy filtering.
-- **AWS-Inspired Interactions:**
-  - 3D parallax card tilt (`rotateX`/`rotateY`) with dynamic radial spotlight illumination overlay (`--mouse-x`, `--mouse-y`).
-  - Magnetic button hover response with spotlight shimmer gradients.
-- **Smart Sticky Header:** Scroll direction tracking hides header on downward scroll and reveals smoothly on upward scroll, with `IntersectionObserver` active section ScrollSpy tracking.
+- **Interactive Glowing Square Grid Canvas:** HTML5 2D grid canvas that illuminates in response to mouse movement with crimson glow (`#e63946`) in dark mode and blue glow (`#3b82f6`) in light mode.
+- **Dynamic Scroll & Page-Aware Background Intensity System:**
+  - **Home Page Hero Top:** 100% visibility & full interaction, serving as the visual focal point.
+  - **Smooth Scroll Progression:** $100\% \text{ (Hero Top)} \rightarrow 70\% \text{ (Mid Hero)} \rightarrow 50\% \text{ (End Hero)} \rightarrow 25\% \text{ (Sections)}$.
+  - **Project Detail Pages:** Begins immediately at ~25% calm, non-intrusive background depth.
+  - **Multi-Property Depth Shift:** Dynamically scales opacity, glow brightness, mouse disturbance radius ($180\text{px} \rightarrow 90\text{px}$), interaction strength ($100\% \rightarrow 25\%$), and grid contrast — creating a natural sense of the canvas retreating into the distance rather than fading out.
+- **Glassmorphism & Depth System:** Semi-transparent dark glass surfaces (`rgba(18, 20, 28, 0.72)` + `backdrop-filter: blur(16px)`), ultra-thin light-reflecting borders, and deep floating elevation shadows (`0 32px 80px rgba(0,0,0,0.6)`).
+- **Tactile & Parallax Interactions:**
+  - **3D Card Parallax Tilt:** 3D perspective rotation (`rotateX`/`rotateY`) with dynamic radial cursor spotlight illumination (`--mouse-x`, `--mouse-y`).
+  - **Magnetic Buttons:** Cursor-following spotlight shimmer (`--btn-x`, `--btn-y`), spring hover lift (`scale(1.015)`), and tactile press response (`scale(0.97)`).
+- **Radial Theme Transition:** Radial circular sweep expanding from the toggle button's exact coordinates (`--origin-x`, `--origin-y` CSS custom properties with `cubic-bezier(0.22, 1, 0.36, 1)` spring easing).
+- **`Cmd+K` Quick Navigation Command Palette:** Keyboard-driven navigation modal with fuzzy searching and focus trapping.
+- **Smart Sticky Header & ScrollSpy:** Scroll direction-sensitive header navigation with `IntersectionObserver` section tracking.
 
 ---
 
@@ -55,9 +61,9 @@ my-website/
 ├── README.md                           # Repository documentation
 ├── assets/
 │   ├── css/
-│   │   └── style.css                   # Design tokens, layouts, and motion styles
+│   │   └── style.css                   # Design tokens, layouts, glassmorphism & motion styles
 │   ├── js/
-│   │   └── main.js                     # Aurora engine, Cmd+K, ScrollSpy, 3D tilt & magnetic handlers
+│   │   └── main.js                     # Grid engine, scroll intensity lerp, Cmd+K, ScrollSpy & 3D tilt
 │   ├── partials/
 │   │   ├── nav.html                    # Shared header & navigation partial
 │   │   └── footer.html                 # Shared footer partial
