@@ -195,7 +195,8 @@ html[data-theme="light"] .bg-gradient {
   );
 }
 
-/* Theme transition overlay */
+/* Theme transition overlay — animation is driven entirely via inline styles in main.js
+   (setTimeout-based: expand 500ms → collapse at 560ms). No CSS class involvement. */
 #theme-overlay {
   position: fixed;
   inset: -10%;
@@ -203,10 +204,6 @@ html[data-theme="light"] .bg-gradient {
   border-radius: 50%;
   transform: scale(0);
   pointer-events: none;
-}
-#theme-overlay.expanding {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: scale(3) !important;
 }
 
 /* ============================================================

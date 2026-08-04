@@ -20,6 +20,7 @@
   applyTheme(savedTheme);
 
   function toggleTheme(originEvent) {
+
     const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
     const next = current === 'light' ? 'dark' : 'light';
 
@@ -34,44 +35,45 @@
     }
 
     const overlay = document.getElementById('theme-overlay');
-    if (overlay) {
+    if (overlay && !prefersReduced) {
       const overlayColor = next === 'light' ? '#f0f2f8' : '#0d0f14';
-      overlay.style.background = overlayColor;
-      overlay.style.transformOrigin = `${ox} ${oy}`;
-      overlay.style.transform = 'scale(0)';
-      overlay.style.transition = 'none';
-      overlay.offsetHeight; // force reflow
-      overlay.classList.add('expanding');
 
+      // Step 1 — reset to hidden, no transition, at click origin
+      overlay.style.cssText = [
+        `background: ${overlayColor}`,
+        `transform-origin: ${ox} ${oy}`,
+        `transform: scale(0)`,
+        `transition: none`,
+        `pointer-events: none`,
+      ].join(';');
+
+      // Force reflow so the browser registers the scale(0) starting state
+      overlay.offsetHeight;
+
+      // Step 2 — animate expansion (500ms)
+      overlay.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      overlay.style.transform = 'scale(3)';
+
+      // Step 3 — switch theme halfway through (250ms)
       setTimeout(() => {
         applyTheme(next);
         localStorage.setItem('portfolio-theme', next);
-        // Update grid glow colour immediately
         if (typeof updateGridColor === 'function') updateGridColor(next);
       }, 250);
 
-      overlay.addEventListener('transitionend', function handler() {
-        overlay.classList.remove('expanding');
+      // Step 4 — collapse overlay after animation completes (500ms + 60ms buffer)
+      // Using setTimeout instead of transitionend — transitionend is unreliable
+      // when inline styles and CSS classes both modify transform simultaneously.
+      setTimeout(() => {
+        overlay.style.transition = 'none';
         overlay.style.transform = 'scale(0)';
-        overlay.removeEventListener('transitionend', handler);
-      });
+      }, 560);
+
     } else {
-      // Fallback: use View Transitions API if available
-      const doSwap = () => { applyTheme(next); localStorage.setItem('portfolio-theme', next); };
-      if (!prefersReduced && document.startViewTransition) {
-        const transition = document.startViewTransition(doSwap);
-        transition.ready.then(() => {
-          const x = parseFloat(ox) / 100 * window.innerWidth;
-          const y = parseFloat(oy) / 100 * window.innerHeight;
-          const endRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
-          document.documentElement.animate(
-            { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`] },
-            { duration: 480, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
-          );
-        });
-      } else {
-        doSwap();
-      }
+      // Reduced motion or no overlay — instant swap
+      applyTheme(next);
+      localStorage.setItem('portfolio-theme', next);
+      if (typeof updateGridColor === 'function') updateGridColor(next);
     }
   }
 
