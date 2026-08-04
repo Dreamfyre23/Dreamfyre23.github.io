@@ -25,18 +25,21 @@
     </script>
   </head>
   <body>
-    <div class="ambient-bg" aria-hidden="true">
-      <div class="aurora aurora-a"></div>
-      <div class="aurora aurora-b"></div>
-      <div class="aurora aurora-c"></div>
-    </div>
+    <!-- Interactive grid canvas background -->
+    <canvas id="bg-canvas"></canvas>
+    <!-- Gradient radial overlay -->
+    <div class="bg-gradient"></div>
+    <!-- Theme transition overlay -->
+    <div id="theme-overlay"></div>
+    <!-- Ambient-bg kept for neural SVG in hero (hidden behind canvas) -->
+    <div class="ambient-bg" aria-hidden="true"></div>
     <div id="navMount"></div>
     <main id="top">
 
       <!-- HERO -->
       <section class="hero">
-        <div class="ambient-bg" aria-hidden="true" style="position: absolute">
-          <svg width="900" height="900" viewBox="0 0 900 900" fill="none" style="position:absolute;top:50%;left:60%;transform:translate(-50%,-50%);opacity:0.55;">
+        <div aria-hidden="true" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none;">
+          <svg width="900" height="900" viewBox="0 0 900 900" fill="none" style="position:absolute;top:50%;left:60%;transform:translate(-50%,-50%);opacity:0.28;">
             <g class="neural-pulse-line">
               <line x1="120" y1="180" x2="340" y2="120" /><line x1="120" y1="180" x2="340" y2="300" />
               <line x1="120" y1="420" x2="340" y2="300" /><line x1="120" y1="420" x2="340" y2="480" />
