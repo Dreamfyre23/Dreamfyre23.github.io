@@ -1,6 +1,6 @@
 # Dinesh Ram S P — Portfolio Website
 
-> **Live Website:** [dreamfyre23.github.io/DineshRamSP_Portfolio](https://dreamfyre23.github.io/DineshRamSP_Portfolio)
+> **Live Website:** [dreamfyre23.github.io/DineshRamSP_Portfolio](https://dreamfyre23.github.io/DineshRamSP_Portfolio/)
 
 Personal portfolio website of **Dinesh Ram S P** — Artificial Intelligence Engineer & Researcher specializing in **Deep Learning**, **Computer Vision**, **Explainable AI (XAI)**, and **Cloud-Deployed AI Applications**.
 
@@ -35,7 +35,7 @@ Personal portfolio website of **Dinesh Ram S P** — Artificial Intelligence Eng
 
 ## 🎨 Design System & Motion Engineering
 
-Built with intent, vanilla web standards, and high-performance UI engineering — zero heavy framework bloat.
+Built with intent, vanilla web standards, and high-performance UI engineering — zero heavy framework bloat. Adopts the design language from [Sathyam Auto Finance](https://github.com/Dreamfyre23/FinanceLoanCaculator) as its visual foundation.
 
 - **Interactive Glowing Square Grid Canvas:** HTML5 2D grid canvas that illuminates in response to mouse movement with crimson glow (`#e63946`) in dark mode and blue glow (`#3b82f6`) in light mode.
 - **Dynamic Scroll & Page-Aware Background Intensity System:**
@@ -84,8 +84,8 @@ No build step or compilation required — served directly as static web files.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Dreamfyre23/Dreamfyre23.github.io.git
-   cd Dreamfyre23.github.io
+   git clone https://github.com/Dreamfyre23/DineshRamSP_Portfolio.git
+   cd DineshRamSP_Portfolio
    ```
 2. Serve locally using any HTTP server:
    ```bash
@@ -104,7 +104,7 @@ No build step or compilation required — served directly as static web files.
 - **Email:** [dineshramsp@gmail.com](mailto:dineshramsp@gmail.com)
 - **LinkedIn:** [linkedin.com/in/dineshramsp](https://www.linkedin.com/in/dineshramsp)
 - **GitHub:** [github.com/Dreamfyre23](https://github.com/Dreamfyre23)
-- **Portfolio:** [dreamfyre23.github.io/DineshRamSP_Portfolio](https://dreamfyre23.github.io/DineshRamSP_Portfolio)
+- **Portfolio:** [dreamfyre23.github.io/DineshRamSP_Portfolio](https://dreamfyre23.github.io/DineshRamSP_Portfolio/)
 
 ---
 
