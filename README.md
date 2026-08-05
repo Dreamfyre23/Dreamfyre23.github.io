@@ -104,7 +104,7 @@ No build step or compilation required — served directly as static web files.
 - **Email:** [dineshramsp@gmail.com](mailto:dineshramsp@gmail.com)
 - **LinkedIn:** [linkedin.com/in/dineshramsp](https://www.linkedin.com/in/dineshramsp)
 - **GitHub:** [github.com/Dreamfyre23](https://github.com/Dreamfyre23)
-- **Portfolio:** [dreamfyre23.github.io](https://dreamfyre23.github.io)
+- **Portfolio:** [dreamfyre23.github.io/DineshRamSP_Portfolio](https://dreamfyre23.github.io/DineshRamSP_Portfolio)
 
 ---
 
