@@ -1,6 +1,6 @@
 # Dinesh Ram S P — Portfolio Website
 
-> **Live Website:** [dreamfyre23.github.io](https://dreamfyre23.github.io)
+> **Live Website:** [dreamfyre23.github.io](https://dreamfyre23.github.io/DineshRamSP_Portfolio)
 
 Personal portfolio website of **Dinesh Ram S P** — Artificial Intelligence Engineer & Researcher specializing in **Deep Learning**, **Computer Vision**, **Explainable AI (XAI)**, and **Cloud-Deployed AI Applications**.
 
